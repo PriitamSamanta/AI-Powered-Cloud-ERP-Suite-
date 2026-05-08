@@ -19,4 +19,56 @@ model User {
   password  String
   role      String   @default("user")
   createdAt DateTime @default(now())
+
+  employees Employee[]
+}
+
+model Employee {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  phone       String?
+  position    String
+  department  String
+  salary      Float
+  status      String   @default("active") // active, inactive, resigned
+
+  userId      Int      // relation with User
+  user        User     @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  leaves Leave[]
+  attendances Attendance[]
+}
+
+model Leave {
+  id          Int      @id @default(autoincrement())
+  reason      String
+  startDate   DateTime
+  endDate     DateTime
+  status      String   @default("pending") // pending, approved, rejected
+
+  employeeId  Int
+  employee    Employee @relation(fields: [employeeId], references: [id])
+
+  createdAt   DateTime @default(now())
+}
+
+
+model Attendance {
+  id          Int      @id @default(autoincrement())
+
+  date        DateTime @default(now())
+  checkIn     DateTime?
+  checkOut    DateTime?
+
+  status      String   @default("present")
+  // present, absent, half_day, leave
+
+  employeeId  Int
+  employee    Employee @relation(fields: [employeeId], references: [id])
+
+  createdAt   DateTime @default(now())
 }
