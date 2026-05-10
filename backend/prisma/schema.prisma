@@ -41,6 +41,8 @@ model Employee {
 
   leaves Leave[]
   attendances Attendance[]
+
+  payrolls Payroll[]
 }
 
 model Leave {
@@ -64,6 +66,8 @@ model Attendance {
   checkIn     DateTime?
   checkOut    DateTime?
 
+  workingHours Float?
+
   status      String   @default("present")
   // present, absent, half_day, leave
 
@@ -71,4 +75,22 @@ model Attendance {
   employee    Employee @relation(fields: [employeeId], references: [id])
 
   createdAt   DateTime @default(now())
+}
+
+model Payroll {
+  id            Int      @id @default(autoincrement())
+
+  month         String
+  basicSalary   Float
+  bonus         Float    @default(0)
+  deductions    Float    @default(0)
+  netSalary     Float
+
+  status        String   @default("generated")
+  // generated, paid
+
+  employeeId    Int
+  employee      Employee @relation(fields: [employeeId], references: [id])
+
+  createdAt     DateTime @default(now())
 }
