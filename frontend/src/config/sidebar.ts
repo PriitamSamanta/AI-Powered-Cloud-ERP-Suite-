@@ -47,12 +47,12 @@ export const sidebarConfig = {
     },
     {
       label: "Attendance",
-      href: "/hr/attendance",
+      href: "/dashboard/hr/attendance",
       icon: Clock,
     },
     {
       label: "Payroll",
-      href: "/hr/payroll",
+      href: "/dashboard/hr/payroll",
       icon: Wallet,
     },
   ],

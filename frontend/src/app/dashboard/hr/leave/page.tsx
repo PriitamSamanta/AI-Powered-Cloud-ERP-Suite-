@@ -24,6 +24,11 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/page-header";
+import TableWrapper from "@/components/shared/table-wrapper";
+import FormSection from "@/components/shared/form-section";
+
+import FormField from "@/components/shared/form-field";
 
 export default function LeavePage() {
   const [formData, setFormData] = useState({
@@ -78,99 +83,110 @@ export default function LeavePage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Leave Management</h1>
-
-        <p className="text-muted-foreground">Apply and manage leaves</p>
-      </div>
+      <PageHeader
+        title="Leave Management"
+        description="Track and manage employee leave requests."
+      />
 
       {/* Leave Form */}
-      <Card>
+      <FormSection title="Leave Form" description="Apply For Leave.">
         <CardContent className="space-y-4 p-6">
           <h2 className="text-xl font-semibold">Apply Leave</h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Input
-              placeholder="Reason"
-              name="reason"
-              value={formData.reason}
-              onChange={handleChange}
-            />
+            <FormField label="Reason">
+              <Input
+                placeholder="Reason"
+                name="reason"
+                value={formData.reason}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-            />
+            <FormField label="Start-Date">
+              <Input
+                type="date"
+                name="startDate"
+                value={formData.startDate}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              type="date"
-              name="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-            />
+            <FormField label="End-Date">
+              <Input
+                type="date"
+                name="endDate"
+                value={formData.endDate}
+                onChange={handleChange}
+              />
+            </FormField>
           </div>
 
-          <Button onClick={handleApply}>Apply Leave</Button>
+          <div className="flex justify-end">
+            <Button size="lg" onClick={handleApply}>
+              Apply Leave
+            </Button>
+          </div>
         </CardContent>
-      </Card>
+      </FormSection>
 
       {/* Leave Table */}
       <Card>
         <CardContent className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Leave Requests</h2>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Reason</TableHead>
+          <TableWrapper>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Reason</TableHead>
 
-                <TableHead>Start Date</TableHead>
+                  <TableHead>Start Date</TableHead>
 
-                <TableHead>End Date</TableHead>
+                  <TableHead>End Date</TableHead>
 
-                <TableHead>Status</TableHead>
+                  <TableHead>Status</TableHead>
 
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {leaves?.map((leave: any) => (
-                <TableRow key={leave.id}>
-                  <TableCell>{leave.reason}</TableCell>
-
-                  <TableCell>
-                    {new Date(leave.startDate).toLocaleDateString()}
-                  </TableCell>
-
-                  <TableCell>
-                    {new Date(leave.endDate).toLocaleDateString()}
-                  </TableCell>
-
-                  <TableCell>{leave.status}</TableCell>
-
-                  <TableCell className="space-x-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleStatusUpdate(leave.id, "approved")}
-                    >
-                      Approve
-                    </Button>
-
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleStatusUpdate(leave.id, "rejected")}
-                    >
-                      Reject
-                    </Button>
-                  </TableCell>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {leaves?.map((leave: any) => (
+                  <TableRow key={leave.id}>
+                    <TableCell>{leave.reason}</TableCell>
+
+                    <TableCell>
+                      {new Date(leave.startDate).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell>
+                      {new Date(leave.endDate).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell>{leave.status}</TableCell>
+
+                    <TableCell className="space-x-2">
+                      <Button
+                        size="sm"
+                        onClick={() => handleStatusUpdate(leave.id, "approved")}
+                      >
+                        Approve
+                      </Button>
+
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleStatusUpdate(leave.id, "rejected")}
+                      >
+                        Reject
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableWrapper>
         </CardContent>
       </Card>
     </div>

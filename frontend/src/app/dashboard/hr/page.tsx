@@ -5,6 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getHRDashboard } from "@/modules/hr/services/dashboard.service";
 
 import { Card, CardContent } from "@/components/ui/card";
+import PageHeader from "@/components/shared/page-header";
+import { Users, Clock, Calendar, Wallet, UserCheck } from "lucide-react";
+import StatCard from "@/components/shared/stat-card";
 
 export default function HRDashboardPage() {
   const { data, isLoading } = useQuery({
@@ -18,48 +21,41 @@ export default function HRDashboardPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-3xl font-bold">HR Dashboard</h1>
+      <PageHeader
+        title="HR Dashboard"
+        description="Monitor employees, payroll, attendance and leave insights."
+      />
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg font-medium">Total Employees</h2>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-5">
+        <StatCard
+          title="Total Employees"
+          value={data?.totalEmployees || 0}
+          icon={Users}
+        />
 
-            <p className="mt-2 text-3xl font-bold">{data?.totalEmployees}</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Present Today"
+          value={data?.presentToday || 0}
+          icon={UserCheck}
+        />
 
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg font-medium">Present Today</h2>
+        <StatCard
+          title="Absent Today"
+          value={data?.absentToday || 0}
+          icon={Clock}
+        />
 
-            <p className="mt-2 text-3xl font-bold">{data?.presentToday}</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Pending Leaves"
+          value={data?.pendingLeaves || 0}
+          icon={Calendar}
+        />
 
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg font-medium">Absent Today</h2>
-
-            <p className="mt-2 text-3xl font-bold">{data?.absentToday}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg font-medium">Pending Leaves</h2>
-
-            <p className="mt-2 text-3xl font-bold">{data?.pendingLeaves}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg font-medium">Payroll Records</h2>
-
-            <p className="mt-2 text-3xl font-bold">{data?.totalPayrolls}</p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Payroll Records"
+          value={data?.totalPayrolls || 0}
+          icon={Wallet}
+        />
       </div>
     </div>
   );
