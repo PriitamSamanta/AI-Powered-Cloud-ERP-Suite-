@@ -26,13 +26,13 @@ export default function DashboardLayout({
   }, [token, router]);
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-muted/30">
       <Sidebar />
 
       <div className="flex-1">
         <Navbar />
 
-        <main className="p-6">{children}</main>
+        <main className="p-6 md:p-8">{children}</main>
       </div>
     </div>
   );

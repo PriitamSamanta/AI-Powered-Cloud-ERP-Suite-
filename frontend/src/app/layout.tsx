@@ -1,5 +1,6 @@
 import QueryProvider from "@/components/providers/query-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import "./globals.css";
 
 export default function RootLayout({
   children,

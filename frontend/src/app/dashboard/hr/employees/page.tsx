@@ -20,9 +20,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import TableWrapper from "@/components/shared/table-wrapper";
+
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
+import FormSection from "@/components/shared/form-section";
+
+import FormField from "@/components/shared/form-field";
+import PageHeader from "@/components/shared/page-header";
 
 export default function EmployeesPage() {
   const [formData, setFormData] = useState({
@@ -33,6 +39,8 @@ export default function EmployeesPage() {
     position: "",
     salary: "",
   });
+
+  const [search, setSearch] = useState("");
 
   const { data: employees, refetch } = useQuery({
     queryKey: ["employees"],
@@ -72,104 +80,139 @@ export default function EmployeesPage() {
     }
   };
 
+  const filteredEmployees =
+    employees?.filter(
+      (employee: any) =>
+        employee.name.toLowerCase().includes(search.toLowerCase()) ||
+        employee.email.toLowerCase().includes(search.toLowerCase()),
+    ) || [];
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Employees</h1>
+      <PageHeader
+        title="Employees"
+        description="Manage employee onboarding and records."
+      />
 
-        <p className="text-muted-foreground">Manage employees and onboarding</p>
+      <div className="flex items-center justify-between">
+        <Input
+          placeholder="Search employees..."
+          className="max-w-sm"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
       {/* Onboarding Form */}
-      <Card>
+      <FormSection
+        title="Onboard Employee"
+        description="Create and manage employee accounts."
+      >
         <CardContent className="p-6 space-y-4">
           <h2 className="text-xl font-semibold">Onboard Employee</h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Input
-              placeholder="Name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+            <FormField label="Name">
+              <Input
+                placeholder="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              placeholder="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
+            <FormField label="Email">
+              <Input
+                placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              placeholder="Password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-            />
+            <FormField label="Password">
+              <Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              placeholder="Department"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-            />
+            <FormField label="Department">
+              <Input
+                placeholder="Department"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              placeholder="Position"
-              name="position"
-              value={formData.position}
-              onChange={handleChange}
-            />
+            <FormField label="Position">
+              <Input
+                placeholder="Position"
+                name="position"
+                value={formData.position}
+                onChange={handleChange}
+              />
+            </FormField>
 
-            <Input
-              placeholder="Salary"
-              name="salary"
-              value={formData.salary}
-              onChange={handleChange}
-            />
+            <FormField label="Salary">
+              <Input
+                placeholder="Salary"
+                name="salary"
+                value={formData.salary}
+                onChange={handleChange}
+              />
+            </FormField>
           </div>
 
-          <Button onClick={handleSubmit}>Add Employee</Button>
+          <div className="flex justify-end">
+            <Button size="lg" onClick={handleSubmit}>
+              Add Employee
+            </Button>
+          </div>
         </CardContent>
-      </Card>
+      </FormSection>
 
       {/* Employee Table */}
       <Card>
         <CardContent className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Employee List</h2>
+          <TableWrapper>
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-muted/50 transition-colors">
+                  <TableHead>Name</TableHead>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
 
-                <TableHead>Email</TableHead>
+                  <TableHead>Department</TableHead>
 
-                <TableHead>Department</TableHead>
+                  <TableHead>Position</TableHead>
 
-                <TableHead>Position</TableHead>
-
-                <TableHead>Salary</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {employees?.map((employee: any) => (
-                <TableRow key={employee.id}>
-                  <TableCell>{employee.name}</TableCell>
-
-                  <TableCell>{employee.email}</TableCell>
-
-                  <TableCell>{employee.department}</TableCell>
-
-                  <TableCell>{employee.position}</TableCell>
-
-                  <TableCell>₹{employee.salary}</TableCell>
+                  <TableHead>Salary</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {filteredEmployees.map((employee: any) => (
+                  <TableRow key={employee.id}>
+                    <TableCell>{employee.name}</TableCell>
+
+                    <TableCell>{employee.email}</TableCell>
+
+                    <TableCell>{employee.department}</TableCell>
+
+                    <TableCell>{employee.position}</TableCell>
+
+                    <TableCell>₹{employee.salary}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableWrapper>
         </CardContent>
       </Card>
     </div>
