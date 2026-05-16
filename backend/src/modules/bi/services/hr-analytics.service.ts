@@ -19,4 +19,18 @@ export class HrAnalyticsService {
       activeEmployees,
     };
   }
+
+  async getEmployeesByDepartment() {
+  const employees = await this.prisma.employee.groupBy({
+    by: ['department'],
+    _count: {
+      department: true,
+    },
+  });
+
+  return employees.map((item) => ({
+    department: item.department,
+    count: item._count.department,
+  }));
+}
 }
