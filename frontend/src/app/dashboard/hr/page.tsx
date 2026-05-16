@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getHRDashboard } from "@/modules/hr/services/dashboard.service";
 
-import { Card, CardContent } from "@/components/ui/card";
 import PageHeader from "@/components/shared/page-header";
 import { Users, Clock, Calendar, Wallet, UserCheck } from "lucide-react";
 import StatCard from "@/components/shared/stat-card";
