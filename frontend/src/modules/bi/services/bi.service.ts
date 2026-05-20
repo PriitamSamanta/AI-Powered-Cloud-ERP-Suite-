@@ -1,30 +1,30 @@
 import axios from '@/lib/axios';
 
 export const getDashboardKPIs = async () => {
-  const response = await axios.get('/bi/kpis');
-  return response.data;
+    const response = await axios.get('/bi/kpis');
+    return response.data;
 };
 
 export const getEmployeesByDepartment = async () => {
-  const response = await axios.get(
-    '/bi/charts/employees-by-department'
-  );
+    const response = await axios.get(
+        '/bi/charts/employees-by-department'
+    );
 
-  return response.data;
+    return response.data;
 };
 
 export const getAttendanceTrend = async () => {
-  const response = await axios.get(
-    '/bi/charts/attendance-trend'
-  );
+    const response = await axios.get(
+        '/bi/charts/attendance-trend'
+    );
 
-  return response.data;
+    return response.data;
 };
 
 export const getLeaveDistribution = async () => {
-  const response = await axios.get(
-    '/bi/charts/leave-distribution'
-  );
+    const response = await axios.get(
+        '/bi/charts/leave-distribution'
+    );
 
-  return response.data;
+    return response.data;
 };
