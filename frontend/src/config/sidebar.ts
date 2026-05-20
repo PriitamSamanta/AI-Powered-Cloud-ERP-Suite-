@@ -1,4 +1,11 @@
-import { LayoutDashboard, Users, Calendar, Clock, Wallet } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Calendar,
+  Clock,
+  Wallet,
+  BarChart3,
+} from "lucide-react";
 
 export const sidebarConfig = {
   admin: [
@@ -6,6 +13,11 @@ export const sidebarConfig = {
       label: "Dashboard",
       href: "/dashboard/hr",
       icon: LayoutDashboard,
+    },
+    {
+      label: "Business Intelligence",
+      href: "/dashboard/bi",
+      icon: BarChart3,
     },
     {
       label: "Employees",
@@ -34,6 +46,11 @@ export const sidebarConfig = {
       label: "Dashboard",
       href: "/dashboard/hr",
       icon: LayoutDashboard,
+    },
+    {
+      label: "Business Intelligence",
+      href: "/dashboard/bi",
+      icon: BarChart3,
     },
     {
       label: "Employees",
