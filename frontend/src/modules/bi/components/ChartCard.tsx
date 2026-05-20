@@ -1,21 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Props {
-  title: string;
-  children: React.ReactNode;
+    title: string;
+    children: React.ReactNode;
 }
 
 export default function ChartCard({
-  title,
-  children,
+    title,
+    children,
 }: Props) {
-  return (
-    <Card className="rounded-2xl">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
+    return (
+        <Card className="rounded-2xl">
+            <CardHeader>
+                <CardTitle>{title}</CardTitle>
+            </CardHeader>
 
-      <CardContent>{children}</CardContent>
-    </Card>
-  );
+            <CardContent>{children}</CardContent>
+        </Card>
+    );
 }
