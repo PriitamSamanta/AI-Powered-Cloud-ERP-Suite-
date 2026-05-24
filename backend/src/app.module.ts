@@ -9,6 +9,7 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { PayrollModule } from './payroll/payroll.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { BiModule } from './modules/bi/bi.module';
+import { FinanceModule } from './modules/finance/finance.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BiModule } from './modules/bi/bi.module';
     PayrollModule,
     DashboardModule,
     BiModule,
+    FinanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
