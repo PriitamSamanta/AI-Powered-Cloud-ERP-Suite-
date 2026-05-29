@@ -20,7 +20,7 @@ export class BiController {
     return this.hrAnalyticsService.getEmployeesByDepartment();
   }
 
-   @Get('charts/attendance-trend')
+  @Get('charts/attendance-trend')
   getAttendanceTrend() {
     return this.attendanceAnalyticsService.getAttendanceTrend();
   }
@@ -28,5 +28,15 @@ export class BiController {
   @Get('charts/leave-distribution')
   getLeaveDistribution() {
     return this.attendanceAnalyticsService.getLeaveDistribution();
+  }
+
+  @Get('charts/expense-breakdown')
+  getExpenseBreakdown() {
+    return this.biService.getExpenseBreakdown();
+  }
+
+  @Get('charts/profit-trend')
+  getProfitTrend() {
+    return this.biService.getProfitTrend();
   }
 }

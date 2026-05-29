@@ -5,6 +5,9 @@ import {
     getEmployeesByDepartment,
     getAttendanceTrend,
     getLeaveDistribution,
+    getFinanceSummary,
+    getExpenseBreakdown,
+    getProfitTrend,
 } from '../services/bi.service';
 
 export const useBiDashboard = () => {
@@ -18,7 +21,7 @@ export const useBiDashboard = () => {
         queryFn: getEmployeesByDepartment,
     });
 
-    const attendanceQuery = useQuery({
+    const attendanceTrendQuery = useQuery({
         queryKey: ['attendance-trend'],
         queryFn: getAttendanceTrend,
     });
@@ -28,10 +31,28 @@ export const useBiDashboard = () => {
         queryFn: getLeaveDistribution,
     });
 
+    const financeSummaryQuery = useQuery({
+        queryKey: ['finance-summary'],
+        queryFn: getFinanceSummary,
+    });
+
+    const expenseBreakdownQuery = useQuery({
+        queryKey: ['expense-breakdown'],
+        queryFn: getExpenseBreakdown,
+    });
+
+    const profitTrendQuery = useQuery({
+        queryKey: ['profit-trend'],
+        queryFn: getProfitTrend,
+    });
+
     return {
         kpiQuery,
         departmentQuery,
-        attendanceQuery,
+        attendanceTrendQuery,
         leaveQuery,
+        financeSummaryQuery,
+        expenseBreakdownQuery,
+        profitTrendQuery,
     };
 };
