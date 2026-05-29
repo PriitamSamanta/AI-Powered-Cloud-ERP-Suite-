@@ -28,3 +28,21 @@ export const getLeaveDistribution = async () => {
 
     return response.data;
 };
+
+export const getExpenseBreakdown = async () => {
+    const response = await axios.get('/bi/charts/expense-breakdown');
+    return response.data;
+};
+
+export const getFinanceSummary = async () => {
+    const response = await axios.get('/finance/summary');
+    return response.data;
+};
+
+export const getProfitTrend = async () => {
+    const response = await axios.get(
+        '/bi/charts/profit-trend'
+    );
+
+    return response.data;
+};

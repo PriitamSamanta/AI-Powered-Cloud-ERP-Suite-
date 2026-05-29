@@ -28,26 +28,50 @@ export class AttendanceAnalyticsService {
   }
 
   async getAttendanceTrend() {
-    return [
-      { date: 'Mon', present: 90 },
-      { date: 'Tue', present: 95 },
-      { date: 'Wed', present: 88 },
-      { date: 'Thu', present: 92 },
-      { date: 'Fri', present: 97 },
-    ];
+    const records = await this.prisma.attendance.findMany({
+      select: {
+        date: true,
+        status: true,
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+
+    const grouped = records.reduce((acc, item) => {
+      const date = item.date.toISOString().split('T')[0];
+
+      if (!acc[date]) {
+        acc[date] = 0;
+      }
+
+      if (item.status === 'present') {
+        acc[date]++;
+      }
+
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.entries(grouped).map(
+      ([date, present]) => ({
+        date,
+        present,
+      }),
+    );
   }
 
   async getLeaveDistribution() {
-    const leaves = await this.prisma.leave.groupBy({
+    const data = await this.prisma.leave.groupBy({
       by: ['status'],
       _count: {
         status: true,
       },
     });
 
-    return leaves.map((item) => ({
-      status: item.status,
+    return data.map((item) => ({
+      type: item.status,
       count: item._count.status,
     }));
   }
 }
+
