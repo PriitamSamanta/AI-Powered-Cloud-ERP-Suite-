@@ -11,13 +11,13 @@ export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Post()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   create(@Body() dto: CreateExpenseDto) {
     return this.expenseService.create(dto);
   }
 
   @Get()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   findAll() {
     return this.expenseService.findAll();
   }

@@ -11,13 +11,13 @@ export class JournalEntriesController {
   constructor(private readonly journalEntriesService: JournalEntriesService) {}
 
   @Post()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   create(@Body() dto: CreateJournalEntryDto) {
     return this.journalEntriesService.create(dto);
   }
 
   @Get()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   findAll() {
     return this.journalEntriesService.findAll();
   }

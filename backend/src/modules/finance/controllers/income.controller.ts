@@ -11,13 +11,13 @@ export class IncomeController {
   constructor(private readonly incomeService: IncomeService) {}
 
   @Post()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   create(@Body() dto: CreateIncomeDto) {
     return this.incomeService.create(dto);
   }
 
   @Get()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   findAll() {
     return this.incomeService.findAll();
   }

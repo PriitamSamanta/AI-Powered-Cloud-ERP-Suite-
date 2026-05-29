@@ -1,14 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
-
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import Sidebar from "@/components/navigation/sidebar";
-
-import Navbar from "@/components/navigation/navbar";
-
 import { useAuthStore } from "@/store/authStore";
+
+
+type ModuleType = "hr" | "finance" | "bi";
+
+const moduleRules: Record<ModuleType, string[]> = {
+  hr: ["admin", "hr", "employee"],
+  finance: ["admin", "hr"],
+  bi: ["hr"],
+};
+
+function getCurrentModule(pathname: string): ModuleType {
+  if (pathname.startsWith("/dashboard/finance")) return "finance";
+  if (pathname.startsWith("/dashboard/bi")) return "bi";
+  return "hr";
+}
 
 export default function DashboardLayout({
   children,
@@ -16,24 +27,35 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
 
-  const { token } = useAuthStore();
+  const { role, loadAuth } = useAuthStore();
 
   useEffect(() => {
+    loadAuth();
+  }, [loadAuth]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
     if (!token) {
-      router.push("/login");
+      router.push("/");
+      return;
     }
-  }, [token, router]);
+
+    const currentModule = getCurrentModule(pathname);
+    const allowedRoles = moduleRules[currentModule];
+
+    if (!role || !allowedRoles.includes(role)) {
+      router.push("/");
+    }
+  }, [pathname, role, router]);
 
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
 
-      <div className="flex-1">
-        <Navbar />
-
-        <main className="p-6 md:p-8">{children}</main>
-      </div>
+      <main className="flex-1 p-8">{children}</main>
     </div>
   );
 }

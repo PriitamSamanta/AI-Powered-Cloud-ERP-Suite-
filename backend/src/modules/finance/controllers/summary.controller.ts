@@ -10,7 +10,7 @@ export class SummaryController {
   constructor(private readonly summaryService: SummaryService) {}
 
   @Get()
-  @Roles('admin')
+  @Roles('admin', 'hr')
   getSummary() {
     return this.summaryService.getSummary();
   }
