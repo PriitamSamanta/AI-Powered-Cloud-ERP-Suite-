@@ -6,6 +6,8 @@ interface StatCardProps {
   value: string | number;
   icon: LucideIcon;
   className?: string;
+  trend?: string;
+  trendType?: 'up' | 'down';
 }
 
 export default function StatCard({
@@ -13,6 +15,8 @@ export default function StatCard({
   value,
   icon: Icon,
   className,
+  trend,
+  trendType,
 }: StatCardProps) {
   const isColored =
     className?.includes('bg-gradient') ?? false;
@@ -35,19 +39,21 @@ export default function StatCard({
         <div className="flex items-start justify-between">
           <div>
             <p
-              className={`text-sm font-medium ${isColored
+              className={`text-sm font-medium ${
+                isColored
                   ? 'text-white/80'
                   : 'text-slate-500'
-                }`}
+              }`}
             >
               {title}
             </p>
 
             <h2
-              className={`mt-3 text-5xl font-bold tracking-tight ${isColored
+              className={`mt-3 text-5xl font-bold tracking-tight ${
+                isColored
                   ? 'text-white'
                   : 'text-slate-900'
-                }`}
+              }`}
             >
               {value}
             </h2>
@@ -61,32 +67,60 @@ export default function StatCard({
               items-center
               justify-center
               rounded-2xl
-              ${isColored
-                ? 'bg-white/20 backdrop-blur-sm'
-                : 'bg-blue-50'
+              ${
+                isColored
+                  ? 'bg-white/20 backdrop-blur-sm'
+                  : 'bg-blue-50'
               }
             `}
           >
             <Icon
-              className={`h-8 w-8 ${isColored
+              className={`h-8 w-8 ${
+                isColored
                   ? 'text-white'
                   : 'text-blue-600'
-                }`}
+              }`}
             />
           </div>
         </div>
 
-        <div className="mt-6 flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-emerald-500" />
+        <div className="mt-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
 
-          <span
-            className={`text-sm font-medium ${isColored
-                ? 'text-white/90'
-                : 'text-emerald-600'
+            <span
+              className={`text-sm font-medium ${
+                isColored
+                  ? 'text-white/90'
+                  : 'text-emerald-600'
               }`}
-          >
-            Live Analytics
-          </span>
+            >
+              Live Analytics
+            </span>
+          </div>
+
+          {trend && (
+            <span
+              className={`
+                rounded-full
+                px-3
+                py-1
+                text-xs
+                font-semibold
+                ${
+                  trendType === 'up'
+                    ? isColored
+                      ? 'bg-white/20 text-white'
+                      : 'bg-green-100 text-green-700'
+                    : isColored
+                    ? 'bg-white/20 text-white'
+                    : 'bg-red-100 text-red-700'
+                }
+              `}
+            >
+              {trend}
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>

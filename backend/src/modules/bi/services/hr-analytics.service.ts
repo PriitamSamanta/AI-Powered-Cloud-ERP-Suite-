@@ -10,7 +10,7 @@ export class HrAnalyticsService {
 
     const activeEmployees = await this.prisma.employee.count({
       where: {
-        status: 'ACTIVE',
+        status: 'active',
       },
     });
 

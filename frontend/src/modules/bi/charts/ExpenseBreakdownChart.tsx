@@ -28,6 +28,11 @@ const COLORS = [
 export default function ExpenseBreakdownChart({
   data,
 }: Props) {
+  const total = data.reduce(
+    (sum, item) => sum + item.amount,
+    0,
+  );
+
   return (
     <div className="h-[320px] w-full">
       <ResponsiveContainer
@@ -41,8 +46,9 @@ export default function ExpenseBreakdownChart({
             nameKey="category"
             cx="50%"
             cy="50%"
-            outerRadius={110}
-            label
+            innerRadius={65}
+            outerRadius={105}
+            paddingAngle={4}
           >
             {data.map((_, index) => (
               <Cell
@@ -57,15 +63,41 @@ export default function ExpenseBreakdownChart({
           </Pie>
 
           <Tooltip
+            formatter={(value) => [
+              `₹${Number(
+                value
+              ).toLocaleString()}`,
+              'Expense',
+            ]}
             contentStyle={{
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
+              borderRadius: '14px',
+              border: '1px solid #E2E8F0',
               boxShadow:
-                '0 4px 12px rgba(0,0,0,0.08)',
+                '0 10px 25px rgba(0,0,0,0.08)',
             }}
           />
 
           <Legend />
+
+          <text
+            x="50%"
+            y="46%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="fill-slate-500 text-xs"
+          >
+            Total
+          </text>
+
+          <text
+            x="50%"
+            y="56%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="fill-slate-900 text-lg font-bold"
+          >
+            ₹{total.toLocaleString()}
+          </text>
         </PieChart>
       </ResponsiveContainer>
     </div>

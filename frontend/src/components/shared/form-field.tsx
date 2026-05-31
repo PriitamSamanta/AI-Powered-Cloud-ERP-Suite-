@@ -3,10 +3,21 @@ interface FormFieldProps {
   children: React.ReactNode;
 }
 
-export default function FormField({ label, children }: FormFieldProps) {
+export default function FormField({
+  label,
+  children,
+}: FormFieldProps) {
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="space-y-3">
+      <label
+        className="
+          text-sm
+          font-semibold
+          text-slate-700
+        "
+      >
+        {label}
+      </label>
 
       {children}
     </div>

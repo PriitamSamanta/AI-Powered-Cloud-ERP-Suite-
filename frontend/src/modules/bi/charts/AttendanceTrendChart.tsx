@@ -2,8 +2,8 @@
 
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -26,7 +26,7 @@ export default function AttendanceTrendChart({
         width="100%"
         height="100%"
       >
-        <LineChart
+        <AreaChart
           data={data}
           margin={{
             top: 10,
@@ -35,54 +35,82 @@ export default function AttendanceTrendChart({
             bottom: 0,
           }}
         >
+          <defs>
+            <linearGradient
+              id="attendanceGradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stopColor="#3B82F6"
+                stopOpacity={0.4}
+              />
+              <stop
+                offset="100%"
+                stopColor="#3B82F6"
+                stopOpacity={0.03}
+              />
+            </linearGradient>
+          </defs>
+
           <CartesianGrid
-            strokeDasharray="3 3"
+            strokeDasharray="4 4"
             vertical={false}
-            stroke="#e2e8f0"
+            stroke="#E2E8F0"
           />
 
           <XAxis
             dataKey="date"
-            tick={{
-              fill: '#64748b',
-              fontSize: 12,
-            }}
             axisLine={false}
             tickLine={false}
+            tick={{
+              fill: '#64748B',
+              fontSize: 12,
+            }}
           />
 
           <YAxis
-            tick={{
-              fill: '#64748b',
-              fontSize: 12,
-            }}
             axisLine={false}
             tickLine={false}
+            tick={{
+              fill: '#64748B',
+              fontSize: 12,
+            }}
           />
 
           <Tooltip
+            cursor={{
+              stroke: '#3B82F6',
+              strokeDasharray: '4 4',
+            }}
             contentStyle={{
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
+              borderRadius: '14px',
+              border: '1px solid #E2E8F0',
               boxShadow:
-                '0 4px 12px rgba(0,0,0,0.08)',
+                '0 10px 25px rgba(0,0,0,0.08)',
             }}
           />
 
-          <Line
+          <Area
             type="monotone"
             dataKey="present"
-            stroke="#10B981"
-            strokeWidth={4}
+            stroke="#2563EB"
+            strokeWidth={3}
+            fill="url(#attendanceGradient)"
             dot={{
-              r: 5,
-              fill: '#10B981',
+              r: 4,
+              fill: '#2563EB',
+              strokeWidth: 2,
+              stroke: '#fff',
             }}
             activeDot={{
-              r: 8,
+              r: 7,
             }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

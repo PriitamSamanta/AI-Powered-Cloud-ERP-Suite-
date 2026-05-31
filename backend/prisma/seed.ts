@@ -131,52 +131,40 @@ async function main() {
 
     console.log('✅ Payroll Created');
 
-    for (let i = 1; i <= 15; i++) {
+    const months = [
+        new Date('2026-01-15'),
+        new Date('2026-02-15'),
+        new Date('2026-03-15'),
+        new Date('2026-04-15'),
+        new Date('2026-05-15'),
+    ];
+
+    for (let i = 0; i < months.length; i++) {
         await prisma.income.create({
             data: {
-                title: `Project Payment ${i}`,
-                amount:
-                    Math.floor(Math.random() * 50000) +
-                    20000,
-                customerName: faker.company.name(),
-                paymentMethod: 'BANK',
-                category: [
-                    'SERVICE',
-                    'CONSULTING',
-                    'PROJECT',
-                ][Math.floor(Math.random() * 3)],
-                date: faker.date.recent(),
-                description: 'Client payment',
+                title: `Project Income ${i + 1}`,
+                amount: 100000 + i * 50000,
+                customerName: 'Client',
+                paymentMethod: 'CASH',
+                category: 'SERVICE',
+                date: months[i],
+                description: 'Income Seed',
             },
         });
-    }
 
-    console.log('✅ Income Created');
-
-    for (let i = 1; i <= 20; i++) {
         await prisma.expense.create({
             data: {
-                title: `Expense ${i}`,
-                amount:
-                    Math.floor(Math.random() * 15000) +
-                    1000,
-                vendorName: faker.company.name(),
-                paymentMethod: 'BANK',
-                category: [
-                    'RENT',
-                    'SALARY',
-                    'SOFTWARE',
-                    'TRAVEL',
-                    'UTILITIES',
-                    'MARKETING',
-                ][Math.floor(Math.random() * 6)],
-                date: faker.date.recent(),
-                description: 'Business expense',
+                title: `Expense ${i + 1}`,
+                amount: 30000 + i * 10000,
+                vendorName: 'Vendor',
+                paymentMethod: 'CASH',
+                category: 'RENT',
+                date: months[i],
+                description: 'Expense Seed',
             },
         });
     }
 
-    console.log('✅ Expenses Created');
 }
 
 main()
