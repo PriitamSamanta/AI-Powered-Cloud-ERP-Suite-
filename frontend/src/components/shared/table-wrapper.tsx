@@ -4,6 +4,19 @@ export default function TableWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="overflow-x-auto rounded-xl border bg-white">{children}</div>
+    <div
+      className="
+        overflow-hidden
+        rounded-3xl
+        border
+        border-slate-200
+        bg-white
+        shadow-sm
+      "
+    >
+      <div className="overflow-x-auto">
+        {children}
+      </div>
+    </div>
   );
 }

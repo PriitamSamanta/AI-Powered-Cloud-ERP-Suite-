@@ -1,9 +1,7 @@
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
 interface Props {
   title: string;
@@ -17,67 +15,78 @@ export default function ChartCard({
   return (
     <Card
       className="
-        bg-white
-        border-0
         rounded-3xl
+        border
+        border-slate-200
+        bg-white
         shadow-sm
-        hover:shadow-xl
         transition-all
         duration-300
-        overflow-hidden
+        hover:shadow-xl
       "
     >
-      <CardHeader
+      <div
         className="
+          flex
+          items-center
+          justify-between
           border-b
           border-slate-100
-          pb-4
+          px-6
+          py-5
         "
       >
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle
-              className="
-                text-lg
-                font-semibold
-                tracking-normal
-                text-slate-800
-              "
-            >
-              {title}
-            </CardTitle>
+        <div>
+          <h3
+            className="
+              text-sm
+              font-bold
+              uppercase
+              tracking-wider
+              text-slate-900
+            "
+          >
+            {title}
+          </h3>
 
-            <p
-              className="
-                mt-1
-                text-sm
-                text-slate-500
-              "
-            >
-              Real-time business insights
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-emerald-500" />
-
-            <span
-              className="
-                text-xs
-                font-medium
-                text-emerald-600
-              "
-            >
-              Live
-            </span>
-          </div>
+          <p
+            className="
+              mt-1
+              text-xs
+              text-slate-500
+            "
+          >
+            Real-time business insights
+          </p>
         </div>
-      </CardHeader>
+
+        <div
+          className="
+            flex
+            items-center
+            gap-2
+            text-xs
+            font-medium
+            text-emerald-600
+          "
+        >
+          <span
+            className="
+              h-2
+              w-2
+              rounded-full
+              bg-emerald-500
+            "
+          />
+
+          Live
+        </div>
+      </div>
 
       <CardContent
         className="
-          h-[350px]
-          pt-6
+          h-[320px]
+          p-6
         "
       >
         {children}

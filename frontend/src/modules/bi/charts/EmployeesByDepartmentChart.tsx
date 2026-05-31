@@ -35,47 +35,70 @@ export default function EmployeesByDepartmentChart({
             bottom: 0,
           }}
         >
+          <defs>
+            <linearGradient
+              id="employeeBarGradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stopColor="#2563EB"
+              />
+              <stop
+                offset="100%"
+                stopColor="#60A5FA"
+              />
+            </linearGradient>
+          </defs>
+
           <CartesianGrid
-            strokeDasharray="3 3"
+            strokeDasharray="4 4"
             vertical={false}
-            stroke="#e2e8f0"
+            stroke="#E2E8F0"
           />
 
           <XAxis
             dataKey="department"
-            tick={{
-              fill: '#64748b',
-              fontSize: 12,
-            }}
             axisLine={false}
             tickLine={false}
+            tick={{
+              fill: '#64748B',
+              fontSize: 12,
+            }}
           />
 
           <YAxis
-            tick={{
-              fill: '#64748b',
-              fontSize: 12,
-            }}
             axisLine={false}
             tickLine={false}
+            tick={{
+              fill: '#64748B',
+              fontSize: 12,
+            }}
           />
 
           <Tooltip
+            formatter={(value) => [
+              `${value} Employees`,
+              'Count',
+            ]}
             cursor={{
-              fill: '#f8fafc',
+              fill: '#F8FAFC',
             }}
             contentStyle={{
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
+              borderRadius: '14px',
+              border: '1px solid #E2E8F0',
               boxShadow:
-                '0 4px 12px rgba(0,0,0,0.08)',
+                '0 10px 25px rgba(0,0,0,0.08)',
             }}
           />
 
           <Bar
             dataKey="count"
-            fill="#3B82F6"
-            radius={[10, 10, 0, 0]}
+            fill="url(#employeeBarGradient)"
+            radius={[12, 12, 0, 0]}
           />
         </BarChart>
       </ResponsiveContainer>

@@ -4,6 +4,7 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   Tooltip,
@@ -61,21 +62,45 @@ export default function RevenueExpenseChart({
           />
 
           <Tooltip
-            cursor={{
-              fill: '#f8fafc',
-            }}
+            formatter={(value) => [
+              `₹${Number(value).toLocaleString()}`,
+              'Amount',
+            ]}
             contentStyle={{
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
+              borderRadius: '14px',
+              border: '1px solid #E2E8F0',
               boxShadow:
-                '0 4px 12px rgba(0,0,0,0.08)',
+                '0 10px 25px rgba(0,0,0,0.08)',
             }}
           />
 
           <Bar
             dataKey="amount"
-            fill="#3B82F6"
-            radius={[10, 10, 0, 0]}
+            shape={(props: any) => {
+              const {
+                x,
+                y,
+                width,
+                height,
+                payload,
+              } = props;
+
+              const fill =
+                payload.name === 'Revenue'
+                  ? '#3B82F6'
+                  : '#EF4444';
+
+              return (
+                <rect
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  rx={12}
+                  fill={fill}
+                />
+              );
+            }}
           />
         </BarChart>
       </ResponsiveContainer>

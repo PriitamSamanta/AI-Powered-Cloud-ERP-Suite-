@@ -24,7 +24,8 @@ export default function RecentActivityCard({
     <Card
       className="
         bg-white
-        border-0
+        border
+        border-slate-200
         rounded-3xl
         shadow-sm
         hover:shadow-xl
@@ -67,7 +68,17 @@ export default function RecentActivityCard({
       </CardHeader>
 
       <CardContent className="pt-6">
-        <div className="h-[420px] overflow-y-auto space-y-3 pr-2">
+        <div
+          className="
+    h-[560px]
+    overflow-y-auto
+    space-y-3
+    pr-2
+    scrollbar-thin
+    scrollbar-thumb-slate-300
+    scrollbar-track-transparent
+  "
+        >
 
           {activities.map((activity) => (
             <div

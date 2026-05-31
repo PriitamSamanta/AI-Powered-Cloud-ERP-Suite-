@@ -6,18 +6,26 @@ export class AttendanceAnalyticsService {
   constructor(private readonly prisma: PrismaService) { }
 
   async getAttendanceKPIs() {
-    const today = new Date();
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
 
-    const presentToday = await this.prisma.attendance.count({
-      where: {
-        date: today,
-        status: 'PRESENT',
-      },
-    });
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const presentToday =
+      await this.prisma.attendance.count({
+        where: {
+          date: {
+            gte: startOfDay,
+            lte: endOfDay,
+          },
+          status: 'present',
+        },
+      });
 
     const onLeaveToday = await this.prisma.leave.count({
       where: {
-        status: 'APPROVED',
+        status: 'approved',
       },
     });
 
