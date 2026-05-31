@@ -31,6 +31,17 @@ import PageHeader from "@/components/shared/page-header";
 import FormSection from "@/components/shared/form-section";
 
 import FormField from "@/components/shared/form-field";
+import StatCard from "@/components/shared/stat-card";
+
+import {
+  Wallet,
+  IndianRupee,
+  Download,
+  FileText,
+  Receipt,
+  TrendingUp,
+  Landmark,
+} from "lucide-react";
 
 export default function PayrollPage() {
   const [formData, setFormData] = useState({
@@ -108,60 +119,197 @@ export default function PayrollPage() {
         description="Generate salaries and manage payslips."
       />
 
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          title="Payroll Records"
+          value={payrolls?.length ?? 0}
+          icon={Receipt}
+          trend="+6.2%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Total Payroll"
+          value={`₹${payrolls?.reduce(
+            (sum: number, item: any) =>
+              sum + item.netSalary,
+            0
+          ) ?? 0
+            }`}
+          icon={Wallet}
+          trend="+4.1%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Bonuses Paid"
+          value={`₹${payrolls?.reduce(
+            (sum: number, item: any) =>
+              sum + item.bonus,
+            0
+          ) ?? 0
+            }`}
+          icon={TrendingUp}
+          trend="+3.0%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Deductions"
+          value={`₹${payrolls?.reduce(
+            (sum: number, item: any) =>
+              sum + item.deductions,
+            0
+          ) ?? 0
+            }`}
+          icon={Landmark}
+          trend="-1.4%"
+          trendType="down"
+        />
+      </div>
+
       {/* Payroll Form */}
       <FormSection
-        title="Onboard Employee"
-        description="Create and manage employee accounts."
+        title="Generate Payroll"
+        description="Create salary records and employee payslips."
       >
-        <CardContent className="space-y-4 p-6">
-          <h2 className="text-xl font-semibold">Generate Payroll</h2>
+        <CardContent className="space-y-8 p-8">
+          <div className="flex items-center gap-4">
+            <div
+              className="
+        flex
+        h-14
+        w-14
+        items-center
+        justify-center
+        rounded-2xl
+        bg-blue-50
+      "
+            >
+              <Wallet className="h-7 w-7 text-blue-600" />
+            </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <FormField label="EmployeeID">
-              <Input
-                placeholder="Employee ID"
-                name="employeeId"
-                value={formData.employeeId}
-                onChange={handleChange}
-              />
-            </FormField>
+            <div>
+              <h2 className="text-3xl font-bold">
+                Generate Payroll
+              </h2>
 
-            <FormField label="Basic Salary">
-              <Input
-                placeholder="Basic Salary"
-                name="basicSalary"
-                value={formData.basicSalary}
-                onChange={handleChange}
-              />
-            </FormField>
-
-            <FormField label="Bonus">
-              <Input
-                placeholder="Bonus"
-                name="bonus"
-                value={formData.bonus}
-                onChange={handleChange}
-              />
-            </FormField>
-
-            <FormField label="Deductions">
-              <Input
-                placeholder="Deductions"
-                name="deductions"
-                value={formData.deductions}
-                onChange={handleChange}
-              />
-            </FormField>
+              <p className="text-slate-500">
+                Create salary records and employee payslips.
+              </p>
+            </div>
           </div>
 
-          <Button onClick={handleGenerate}>Generate Payroll</Button>
+          <div className="grid gap-6 md:grid-cols-2">
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField label="EmployeeID">
+                <Input
+                  className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
+                  placeholder="Employee ID"
+                  name="employeeId"
+                  value={formData.employeeId}
+                  onChange={handleChange}
+                />
+              </FormField>
+
+              <FormField label="Basic Salary">
+                <Input
+                  className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
+                  placeholder="Basic Salary"
+                  name="basicSalary"
+                  value={formData.basicSalary}
+                  onChange={handleChange}
+                />
+              </FormField>
+
+              <FormField label="Bonus">
+                <Input
+                  className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
+                  placeholder="Bonus"
+                  name="bonus"
+                  value={formData.bonus}
+                  onChange={handleChange}
+                />
+              </FormField>
+
+              <FormField label="Deductions">
+                <Input
+                  className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
+                  placeholder="Deductions"
+                  name="deductions"
+                  value={formData.deductions}
+                  onChange={handleChange}
+                />
+              </FormField>
+            </div>
+
+            <Button
+              onClick={handleGenerate}
+              className="
+                h-12
+                rounded-xl
+                bg-blue-600
+                px-8
+                hover:bg-blue-700
+              "
+            >
+              <IndianRupee className="mr-2 h-4 w-4" />
+              Generate Payroll
+            </Button>
+          </div>
         </CardContent>
       </FormSection>
 
+
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <Input
+          placeholder="Search payroll..."
+          className="max-w-md rounded-2xl"
+        />
+
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Download className="mr-2 h-4 w-4" />
+            Export CSV
+          </Button>
+
+          <Button variant="outline">
+            <FileText className="mr-2 h-4 w-4" />
+            Export PDF
+          </Button>
+        </div>
+      </div>
+
       {/* Payroll Table */}
-      <Card>
+      <Card
+        className="
+        rounded-3xl
+        border
+        border-slate-200
+        shadow-sm
+      "
+      >
         <CardContent className="p-6">
-          <h2 className="mb-4 text-xl font-semibold">Payroll Records</h2>
+          <h2 className="mb-6 text-2xl font-bold">
+            Payroll Records
+          </h2>
           <TableWrapper>
             <Table>
               <TableHeader>
@@ -191,14 +339,25 @@ export default function PayrollPage() {
 
                     <TableCell>₹{payroll.deductions}</TableCell>
 
-                    <TableCell>₹{payroll.netSalary}</TableCell>
+                    <TableCell>
+                      <span className="font-semibold text-emerald-600">
+                        ₹{Number(
+                          payroll.netSalary
+                        ).toLocaleString()}
+                      </span>
+                    </TableCell>
 
                     <TableCell>
                       <Button
                         size="sm"
-                        onClick={() => handleDownload(payroll.id)}
+                        variant="outline"
+                        className="rounded-xl"
+                        onClick={() =>
+                          handleDownload(payroll.id)
+                        }
                       >
-                        Download
+                        <Download className="mr-2 h-4 w-4" />
+                        Payslip
                       </Button>
                     </TableCell>
                   </TableRow>
