@@ -29,6 +29,17 @@ import TableWrapper from "@/components/shared/table-wrapper";
 import FormSection from "@/components/shared/form-section";
 
 import FormField from "@/components/shared/form-field";
+import StatCard from "@/components/shared/stat-card";
+
+import {
+  CalendarDays,
+  Clock3,
+  CheckCircle2,
+  XCircle,
+  FileText,
+  Download,
+  Plane,
+} from "lucide-react";
 
 export default function LeavePage() {
   const [formData, setFormData] = useState({
@@ -88,14 +99,92 @@ export default function LeavePage() {
         description="Track and manage employee leave requests."
       />
 
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          title="Total Requests"
+          value={leaves?.length ?? 0}
+          icon={CalendarDays}
+          trend="+4.2%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Approved"
+          value={
+            leaves?.filter(
+              (leave: any) =>
+                leave.status?.toLowerCase() === "approved"
+            ).length ?? 0
+          }
+          icon={CheckCircle2}
+          trend="+2.3%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Pending"
+          value={
+            leaves?.filter(
+              (leave: any) =>
+                leave.status?.toLowerCase() === "pending"
+            ).length ?? 0
+          }
+          icon={Clock3}
+          trend="+1.2%"
+          trendType="up"
+        />
+
+        <StatCard
+          title="Rejected"
+          value={
+            leaves?.filter(
+              (leave: any) =>
+                leave.status?.toLowerCase() === "rejected"
+            ).length ?? 0
+          }
+          icon={XCircle}
+          trend="-0.8%"
+          trendType="down"
+        />
+      </div>
+
       {/* Leave Form */}
       <FormSection title="Leave Form" description="Apply For Leave.">
         <CardContent className="space-y-4 p-6">
-          <h2 className="text-xl font-semibold">Apply Leave</h2>
+          <div className="flex items-center gap-4">
+            <div
+              className="
+      flex
+      h-14
+      w-14
+      items-center
+      justify-center
+      rounded-2xl
+      bg-blue-50
+    "
+            >
+              <Plane className="h-7 w-7 text-blue-600" />
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold">
+                Apply Leave
+              </h2>
+
+              <p className="text-slate-500">
+                Submit leave requests for approval.
+              </p>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField label="Reason">
               <Input
+                className="
+                h-12
+                rounded-xl
+                border-slate-200
+              "
                 placeholder="Reason"
                 name="reason"
                 value={formData.reason}
@@ -105,6 +194,11 @@ export default function LeavePage() {
 
             <FormField label="Start-Date">
               <Input
+                className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
                 type="date"
                 name="startDate"
                 value={formData.startDate}
@@ -114,6 +208,11 @@ export default function LeavePage() {
 
             <FormField label="End-Date">
               <Input
+                className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                "
                 type="date"
                 name="endDate"
                 value={formData.endDate}
@@ -123,17 +222,58 @@ export default function LeavePage() {
           </div>
 
           <div className="flex justify-end">
-            <Button size="lg" onClick={handleApply}>
+            <Button
+              size="lg"
+              onClick={handleApply}
+              className="
+              h-12
+              rounded-xl
+              px-8
+              bg-blue-600
+              hover:bg-blue-700
+            "
+            >
+              <Plane className="mr-2 h-4 w-4" />
               Apply Leave
             </Button>
           </div>
         </CardContent>
       </FormSection>
 
+      {/* toolbar */}
+
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <Input
+          placeholder="Search leave requests..."
+          className="max-w-md rounded-2xl"
+        />
+
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Download className="mr-2 h-4 w-4" />
+            Export CSV
+          </Button>
+
+          <Button variant="outline">
+            <FileText className="mr-2 h-4 w-4" />
+            Export PDF
+          </Button>
+        </div>
+      </div>
+
       {/* Leave Table */}
-      <Card>
+      <Card
+        className="
+        rounded-3xl
+        border
+        border-slate-200
+        shadow-sm
+      "
+      >
         <CardContent className="p-6">
-          <h2 className="mb-4 text-xl font-semibold">Leave Requests</h2>
+          <h2 className="mb-6 text-2xl font-bold">
+            Leave Requests
+          </h2>
 
           <TableWrapper>
             <Table>
@@ -164,10 +304,23 @@ export default function LeavePage() {
                       {new Date(leave.endDate).toLocaleDateString()}
                     </TableCell>
 
-                    <TableCell>{leave.status}</TableCell>
+                    <TableCell>
+                      <span
+                        className={
+                          leave.status?.toLowerCase() === "approved"
+                            ? "rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700"
+                            : leave.status?.toLowerCase() === "pending"
+                              ? "rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700"
+                              : "rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700"
+                        }
+                      >
+                        {leave.status}
+                      </span>
+                    </TableCell>
 
                     <TableCell className="space-x-2">
                       <Button
+                        className="rounded-xl"
                         size="sm"
                         onClick={() => handleStatusUpdate(leave.id, "approved")}
                       >
@@ -175,6 +328,7 @@ export default function LeavePage() {
                       </Button>
 
                       <Button
+                        className="rounded-xl"
                         size="sm"
                         variant="destructive"
                         onClick={() => handleStatusUpdate(leave.id, "rejected")}
