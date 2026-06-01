@@ -12,6 +12,14 @@ export const applyLeave = async (data: any) => {
   return response.data;
 };
 
+export const getMyLeaves = async () => {
+  const response = await api.get(
+    "/leave/my"
+  );
+
+  return response.data;
+};
+
 export const updateLeaveStatus = async (id: number, status: string) => {
   const response = await api.put(`/leave/${id}/status`, {
     status,

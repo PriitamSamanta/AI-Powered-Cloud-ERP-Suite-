@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/components/navigation/sidebar";
 import { useAuthStore } from "@/store/authStore";
 
-type ModuleType = "hr" | "finance" | "bi";
+type ModuleType = "hr" | "finance" | "bi" ;
 
 const moduleRules: Record<ModuleType, string[]> = {
   hr: ["admin", "hr", "employee"],
@@ -15,11 +15,11 @@ const moduleRules: Record<ModuleType, string[]> = {
 };
 
 function getCurrentModule(
-  pathname: string
+  pathname: string,
 ): ModuleType {
   if (
     pathname.startsWith(
-      "/dashboard/finance"
+      "/dashboard/finance",
     )
   )
     return "finance";
