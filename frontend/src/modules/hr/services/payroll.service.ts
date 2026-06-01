@@ -12,6 +12,14 @@ export const generatePayroll = async (data: any) => {
   return response.data;
 };
 
+export const getMyPayrolls = async () => {
+  const response = await api.get(
+    "/payroll/my"
+  );
+
+  return response.data;
+};
+
 export const downloadPayslip = async (id: number) => {
   const response = await api.get(`/payroll/payslip/${id}`, {
     responseType: "blob",

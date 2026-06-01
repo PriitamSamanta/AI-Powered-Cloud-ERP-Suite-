@@ -20,18 +20,20 @@ interface DecodedToken {
   role: string;
 }
 
-type ModuleType = "hr" | "finance" | "bi";
+type ModuleType = "hr" | "finance" | "bi" | "employee";
 
 const moduleRules: Record<ModuleType, string[]> = {
-  hr: ["admin", "hr", "employee"],
+  hr: ["admin", "hr"],
   finance: ["admin", "hr"],
   bi: ["hr"],
+  employee: ["employee"],
 };
 
 const moduleRedirects: Record<ModuleType, string> = {
   hr: "/dashboard/hr",
   finance: "/dashboard/finance",
   bi: "/dashboard/bi",
+  employee: "/dashboard/hr",
 };
 
 export default function LoginPage() {

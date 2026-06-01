@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BarChart3, BriefcaseBusiness, Users } from "lucide-react";
+import { BarChart3, BriefcaseBusiness, Users, UserCircle2 } from "lucide-react";
 
 const modules = [
   {
@@ -7,6 +7,13 @@ const modules = [
     description: "Employees, attendance, leave and payroll management.",
     icon: Users,
     href: "/login?module=hr",
+  },
+  {
+    title: "Employee Portal",
+    description:
+      "Attendance, leave requests, payroll and personal profile.",
+    icon: UserCircle2,
+    href: "/login?module=employee",
   },
   {
     title: "Finance Module",
@@ -52,7 +59,7 @@ export default function LandingPage() {
             </p>
 
             <h2 className="mx-auto max-w-4xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-              AI-Powered Cloud ERP Suite for Modern Business
+              Enterprise ERP Platform for HR, Finance, Analytics & Workforce Management
             </h2>
 
             <p className="mx-auto mt-6 max-w-2xl text-gray-600">
@@ -62,7 +69,14 @@ export default function LandingPage() {
 
             <div
               id="modules"
-              className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3"
+              className="
+                mx-auto mt-12 grid
+                max-w-6xl
+                grid-cols-1
+                gap-6
+                md:grid-cols-2
+                xl:grid-cols-4
+                "
             >
               {modules.map((module) => {
                 const Icon = module.icon;
@@ -71,9 +85,34 @@ export default function LandingPage() {
                   <Link
                     key={module.title}
                     href={module.href}
-                    className="group rounded-2xl border bg-white p-6 text-left transition hover:-translate-y-1 hover:shadow-md"
+                    className="
+                      group
+                      rounded-3xl
+                      border
+                      border-slate-200
+                      bg-white
+                      p-7
+                      text-left
+                      shadow-sm
+                      transition-all
+                      duration-300
+                      hover:-translate-y-2
+                      hover:shadow-xl
+                      "
                   >
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 group-hover:bg-black group-hover:text-white">
+                    <div className="
+                        mb-5
+                        flex
+                        h-14
+                        w-14
+                        items-center
+                        justify-center
+                        rounded-2xl
+                        bg-slate-100
+                        transition-all
+                        group-hover:bg-[#0D1B2A]
+                        group-hover:text-white
+                        ">
                       <Icon size={24} />
                     </div>
 

@@ -3,11 +3,13 @@
 import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
+import { useAuthStore } from "@/store/authStore";
 
 import {
   getLeaves,
   applyLeave,
   updateLeaveStatus,
+  getMyLeaves,
 } from "@/modules/hr/services/leave.service";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -42,6 +44,10 @@ import {
 } from "lucide-react";
 
 export default function LeavePage() {
+
+  const { role } = useAuthStore();
+
+  const isEmployee = role === "employee";
   const [formData, setFormData] = useState({
     reason: "",
     startDate: "",
@@ -49,8 +55,14 @@ export default function LeavePage() {
   });
 
   const { data: leaves, refetch } = useQuery({
-    queryKey: ["leaves"],
-    queryFn: getLeaves,
+    queryKey: [
+      isEmployee
+        ? "my-leaves"
+        : "leaves",
+    ],
+    queryFn: isEmployee
+      ? getMyLeaves
+      : getLeaves,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,58 +107,118 @@ export default function LeavePage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Leave Management"
-        description="Track and manage employee leave requests."
+        title={
+          isEmployee
+            ? "My Leaves"
+            : "Leave Management"
+        }
+        description={
+          isEmployee
+            ? "Apply for leave and track request status."
+            : "Track and manage employee leave requests."
+        }
       />
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Total Requests"
-          value={leaves?.length ?? 0}
-          icon={CalendarDays}
-          trend="+4.2%"
-          trendType="up"
-        />
+      {isEmployee && (
+        <Card className="rounded-3xl border border-slate-200 shadow-sm">
+          <CardContent className="p-6">
+            <h2 className="text-xl font-bold">
+              Leave Summary
+            </h2>
 
-        <StatCard
-          title="Approved"
-          value={
-            leaves?.filter(
-              (leave: any) =>
-                leave.status?.toLowerCase() === "approved"
-            ).length ?? 0
-          }
-          icon={CheckCircle2}
-          trend="+2.3%"
-          trendType="up"
-        />
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              <div>
+                <p className="text-sm text-slate-500">
+                  Total Requests
+                </p>
 
-        <StatCard
-          title="Pending"
-          value={
-            leaves?.filter(
-              (leave: any) =>
-                leave.status?.toLowerCase() === "pending"
-            ).length ?? 0
-          }
-          icon={Clock3}
-          trend="+1.2%"
-          trendType="up"
-        />
+                <p className="text-2xl font-bold">
+                  {leaves?.length ?? 0}
+                </p>
+              </div>
 
-        <StatCard
-          title="Rejected"
-          value={
-            leaves?.filter(
-              (leave: any) =>
-                leave.status?.toLowerCase() === "rejected"
-            ).length ?? 0
-          }
-          icon={XCircle}
-          trend="-0.8%"
-          trendType="down"
-        />
-      </div>
+              <div>
+                <p className="text-sm text-slate-500">
+                  Pending
+                </p>
+
+                <p className="text-2xl font-bold text-yellow-600">
+                  {leaves?.filter(
+                    (leave: any) =>
+                      leave.status?.toLowerCase() ===
+                      "pending"
+                  ).length ?? 0}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  Approved
+                </p>
+
+                <p className="text-2xl font-bold text-green-600">
+                  {leaves?.filter(
+                    (leave: any) =>
+                      leave.status?.toLowerCase() ===
+                      "approved"
+                  ).length ?? 0}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {!isEmployee && (
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <StatCard
+            title="Total Requests"
+            value={leaves?.length ?? 0}
+            icon={CalendarDays}
+            trend="+4.2%"
+            trendType="up"
+          />
+
+          <StatCard
+            title="Approved"
+            value={
+              leaves?.filter(
+                (leave: any) =>
+                  leave.status?.toLowerCase() === "approved"
+              ).length ?? 0
+            }
+            icon={CheckCircle2}
+            trend="+2.3%"
+            trendType="up"
+          />
+
+          <StatCard
+            title="Pending"
+            value={
+              leaves?.filter(
+                (leave: any) =>
+                  leave.status?.toLowerCase() === "pending"
+              ).length ?? 0
+            }
+            icon={Clock3}
+            trend="+1.2%"
+            trendType="up"
+          />
+
+          <StatCard
+            title="Rejected"
+            value={
+              leaves?.filter(
+                (leave: any) =>
+                  leave.status?.toLowerCase() === "rejected"
+              ).length ?? 0
+            }
+            icon={XCircle}
+            trend="-0.8%"
+            trendType="down"
+          />
+        </div>
+      )}
 
       {/* Leave Form */}
       <FormSection title="Leave Form" description="Apply For Leave.">
@@ -154,14 +226,14 @@ export default function LeavePage() {
           <div className="flex items-center gap-4">
             <div
               className="
-      flex
-      h-14
-      w-14
-      items-center
-      justify-center
-      rounded-2xl
-      bg-blue-50
-    "
+                flex
+                h-14
+                w-14
+                items-center
+                justify-center
+                rounded-2xl
+                bg-blue-50
+              "
             >
               <Plane className="h-7 w-7 text-blue-600" />
             </div>
@@ -242,24 +314,28 @@ export default function LeavePage() {
 
       {/* toolbar */}
 
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <Input
-          placeholder="Search leave requests..."
-          className="max-w-md rounded-2xl"
-        />
+      {!isEmployee && (
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <Input
+            placeholder="Search leave requests..."
+            className="max-w-md rounded-2xl"
+          />
 
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <Download className="mr-2 h-4 w-4" />
-            Export CSV
-          </Button>
 
-          <Button variant="outline">
-            <FileText className="mr-2 h-4 w-4" />
-            Export PDF
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline">
+              <Download className="mr-2 h-4 w-4" />
+              Export CSV
+            </Button>
+
+            <Button variant="outline">
+              <FileText className="mr-2 h-4 w-4" />
+              Export PDF
+            </Button>
+          </div>
         </div>
-      </div>
+
+      )}
 
       {/* Leave Table */}
       <Card
@@ -272,7 +348,9 @@ export default function LeavePage() {
       >
         <CardContent className="p-6">
           <h2 className="mb-6 text-2xl font-bold">
-            Leave Requests
+            {isEmployee
+              ? "My Leave Requests"
+              : "Leave Requests"}
           </h2>
 
           <TableWrapper>
@@ -287,7 +365,9 @@ export default function LeavePage() {
 
                   <TableHead>Status</TableHead>
 
-                  <TableHead>Actions</TableHead>
+                  {!isEmployee && (
+                    <TableHead>Actions</TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
 
@@ -317,25 +397,26 @@ export default function LeavePage() {
                         {leave.status}
                       </span>
                     </TableCell>
+                    {!isEmployee && (
+                      <TableCell className="space-x-2">
+                        <Button
+                          className="rounded-xl"
+                          size="sm"
+                          onClick={() => handleStatusUpdate(leave.id, "approved")}
+                        >
+                          Approve
+                        </Button>
 
-                    <TableCell className="space-x-2">
-                      <Button
-                        className="rounded-xl"
-                        size="sm"
-                        onClick={() => handleStatusUpdate(leave.id, "approved")}
-                      >
-                        Approve
-                      </Button>
-
-                      <Button
-                        className="rounded-xl"
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleStatusUpdate(leave.id, "rejected")}
-                      >
-                        Reject
-                      </Button>
-                    </TableCell>
+                        <Button
+                          className="rounded-xl"
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleStatusUpdate(leave.id, "rejected")}
+                        >
+                          Reject
+                        </Button>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>
