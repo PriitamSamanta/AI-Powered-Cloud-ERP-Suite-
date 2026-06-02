@@ -12,6 +12,7 @@ import PageHeader from "@/components/shared/page-header";
 import FormSection from "@/components/shared/form-section";
 import TableWrapper from "@/components/shared/table-wrapper";
 import StatCard from "@/components/shared/stat-card";
+import { toast } from "sonner";
 
 import {
   TrendingDown,
@@ -65,7 +66,7 @@ export default function FinanceExpensePage() {
       fetchExpense();
     } catch (error) {
       console.error(error);
-      alert("Failed to create expense");
+      toast.error("Failed to create expense");
     }
   };
 

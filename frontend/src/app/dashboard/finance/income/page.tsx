@@ -13,7 +13,7 @@ import PageHeader from "@/components/shared/page-header";
 import FormSection from "@/components/shared/form-section";
 import TableWrapper from "@/components/shared/table-wrapper";
 import StatCard from "@/components/shared/stat-card";
-
+import { toast } from "sonner";
 import {
   TrendingUp,
   IndianRupee,
@@ -66,7 +66,7 @@ export default function FinanceIncomePage() {
       fetchIncome();
     } catch (error) {
       console.error(error);
-      alert("Failed to create income");
+      toast.error("Failed to create income");
     }
   };
 

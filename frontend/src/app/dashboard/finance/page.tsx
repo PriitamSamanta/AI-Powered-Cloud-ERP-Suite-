@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getFinanceSummary, FinanceSummary } from "@/modules/finance/services/finance.service";
-import { Card, CardContent } from "@/components/ui/card";
+
 import PageHeader from "@/components/shared/page-header";
 import StatCard from "@/components/shared/stat-card";
 import { TrendingDown, TrendingUp, Wallet, Landmark } from "lucide-react";
