@@ -1,30 +1,35 @@
 import Link from "next/link";
-import { BarChart3, BriefcaseBusiness, Users, UserCircle2 } from "lucide-react";
+import {
+  UsersRound,
+  UserCog,
+  Landmark,
+  BarChart4,
+} from "lucide-react";
 
 const modules = [
   {
     title: "HR Module",
     description: "Employees, attendance, leave and payroll management.",
-    icon: Users,
+    icon: UsersRound,
     href: "/login?module=hr",
   },
   {
     title: "Employee Portal",
     description:
       "Attendance, leave requests, payroll and personal profile.",
-    icon: UserCircle2,
+    icon: UserCog,
     href: "/login?module=employee",
   },
   {
     title: "Finance Module",
     description: "Accounts, income, expense, journal and financial summary.",
-    icon: BriefcaseBusiness,
+    icon: Landmark,
     href: "/login?module=finance",
   },
   {
     title: "BI Module",
     description: "Analytics, charts, reports and business insights.",
-    icon: BarChart3,
+    icon: BarChart4,
     href: "/login?module=bi",
   },
 ];
@@ -32,12 +37,56 @@ const modules = [
 export default function LandingPage() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="min-h-screen px-8 py-8">
-        <div className="mx-auto max-w-7xl">
+      <section
+        className="
+          relative
+          min-h-screen
+          overflow-hidden
+          text-white
+        "
+      >
+        <div
+          className="
+            absolute
+            inset-0
+            bg-cover
+            bg-center
+            bg-no-repeat
+          "
+          style={{
+            backgroundImage: "url('/images/newback3.jpeg')",
+          }}
+        />
+        <div className="absolute inset-0 bg-[#0D1B2A]/80" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-8">
           <nav className="flex items-center justify-between border-b pb-5">
-            <h1 className="text-lg font-bold tracking-tight">
-              Amdox ERP Suite
-            </h1>
+            <div className="flex items-center gap-3">
+              <div
+                className="
+                  flex
+                  h-10
+                  w-10
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-white/10
+                  backdrop-blur
+                "
+              >
+                A
+              </div>
+
+              <div>
+                <h1 className="font-bold">
+                  Amdox ERP
+                </h1>
+
+                <p className="text-xs text-slate-300">
+                  Enterprise Suite
+                </p>
+              </div>
+            </div>
 
             <div className="hidden items-center gap-8 text-sm font-medium md:flex">
               <a href="#modules">Modules</a>
@@ -46,10 +95,21 @@ export default function LandingPage() {
             </div>
 
             <Link
-              href="/login"
-              className="rounded-full border px-5 py-2 text-sm font-medium hover:bg-black hover:text-white"
+              href="/register"
+              className="
+                rounded-full
+                bg-white/10
+                backdrop-blur-xl
+                border-white/10
+                px-5
+                py-2
+                text-sm
+                font-medium
+                text-white
+                hover:opacity-90
+              "
             >
-              Login
+              Register
             </Link>
           </nav>
 
@@ -58,14 +118,52 @@ export default function LandingPage() {
               — Cloud ERP Platform —
             </p>
 
-            <h2 className="mx-auto max-w-4xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-              Enterprise ERP Platform for HR, Finance, Analytics & Workforce Management
+            <h2 className="mx-auto max-w-5xl text-5xl font-bold leading-tight md:text-7xl">
+              Transform Your Business Operations
+              with One Unified ERP Platform
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-gray-600">
-              Manage HR, Finance and Business Intelligence from one secure ERP
-              platform.
-            </p>
+            <div className="mt-12 flex flex-wrap justify-center gap-10">
+              <div>
+                <h3 className="text-4xl font-bold">
+                  HR
+                </h3>
+
+                <p className="text-slate-300">
+                  Workforce Management
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-4xl font-bold">
+                  FIN
+                </h3>
+
+                <p className="text-slate-300">
+                  Financial Operations
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-4xl font-bold">
+                  BI
+                </h3>
+
+                <p className="text-slate-300">
+                  Business Intelligence
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-4xl font-bold">
+                  EMP
+                </h3>
+
+                <p className="text-slate-300">
+                  Employee Portal
+                </p>
+              </div>
+            </div>
 
             <div
               id="modules"
@@ -90,7 +188,9 @@ export default function LandingPage() {
                       rounded-3xl
                       border
                       border-slate-200
-                      bg-white
+                      bg-white/10
+                      backdrop-blur-xl
+                      border-white/10
                       p-7
                       text-left
                       shadow-sm
@@ -100,24 +200,32 @@ export default function LandingPage() {
                       hover:shadow-xl
                       "
                   >
-                    <div className="
-                        mb-5
+                    <div
+                      className="
+                        mb-6
                         flex
-                        h-14
-                        w-14
+                        h-16
+                        w-16
                         items-center
                         justify-center
                         rounded-2xl
-                        bg-slate-100
+                        bg-gradient-to-br
+                        from-blue-500/20
+                        to-cyan-500/20
+                        border
+                        border-white/10
+                        text-cyan-300
                         transition-all
-                        group-hover:bg-[#0D1B2A]
+                        duration-300
+                        group-hover:scale-110
                         group-hover:text-white
-                        ">
-                      <Icon size={24} />
+                      "
+                    >
+                      <Icon size={30} strokeWidth={2.2} />
                     </div>
 
-                    <h3 className="text-lg font-semibold">{module.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-gray-500">
+                    <h3 className="text-lg font-semibold text-white">{module.title}</h3>
+                    <p className="text-slate-300">
                       {module.description}
                     </p>
 
@@ -125,6 +233,49 @@ export default function LandingPage() {
                   </Link>
                 );
               })}
+            </div>
+
+            <div
+              id="about"
+              className="
+                mt-28
+                grid
+                gap-8
+                md:grid-cols-3
+              "
+            >
+              <div className="rounded-3xl bg-white/10 p-8 backdrop-blur">
+                <h3 className="text-xl font-semibold">
+                  Human Resources
+                </h3>
+
+                <p className="mt-3 text-slate-300">
+                  Employee onboarding, attendance,
+                  leave and payroll management.
+                </p>
+              </div>
+
+              <div className="rounded-3xl bg-white/10 p-8 backdrop-blur">
+                <h3 className="text-xl font-semibold">
+                  Finance
+                </h3>
+
+                <p className="mt-3 text-slate-300">
+                  Income, expenses, journals and
+                  accounting workflows.
+                </p>
+              </div>
+
+              <div className="rounded-3xl bg-white/10 p-8 backdrop-blur">
+                <h3 className="text-xl font-semibold">
+                  Business Intelligence
+                </h3>
+
+                <p className="mt-3 text-slate-300">
+                  Analytics dashboards, reports
+                  and executive insights.
+                </p>
+              </div>
             </div>
 
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-gray-500">
