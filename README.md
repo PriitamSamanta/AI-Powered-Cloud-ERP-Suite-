@@ -64,8 +64,11 @@ A modern Enterprise Resource Planning (ERP) system built to manage Human Resourc
 
 * NestJS
 * Prisma ORM
-* MySQL
 * JWT Authentication
+
+### Database
+
+* PostgreSQL
 
 ## Project Structure
 
