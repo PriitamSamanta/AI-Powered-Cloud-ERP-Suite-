@@ -127,4 +127,4 @@ Pritam
 
 BCA Graduate | Full Stack Developer
 
-Built as an Internship ERP Project using Next.js, NestJS, Prisma, and MySQL.
+Built as an Internship ERP Project using Next.js, NestJS, Prisma, and postgreSQL.
