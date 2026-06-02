@@ -34,7 +34,7 @@ import FormSection from "@/components/shared/form-section";
 
 import FormField from "@/components/shared/form-field";
 import StatCard from "@/components/shared/stat-card";
-
+import { toast } from "sonner";
 import {
   Wallet,
   IndianRupee,
@@ -86,7 +86,7 @@ export default function PayrollPage() {
         deductions: Number(formData.deductions),
       });
 
-      alert("Payroll generated");
+      toast.success("Payroll generated");
 
       refetch();
 
@@ -99,7 +99,7 @@ export default function PayrollPage() {
     } catch (error) {
       console.error(error);
 
-      alert("Failed to generate payroll");
+      toast.error("Failed to generate payroll");
     }
   };
 
@@ -119,7 +119,7 @@ export default function PayrollPage() {
     } catch (error) {
       console.error(error);
 
-      alert("Failed to download payslip");
+      toast.error("Failed to download payslip");
     }
   };
 

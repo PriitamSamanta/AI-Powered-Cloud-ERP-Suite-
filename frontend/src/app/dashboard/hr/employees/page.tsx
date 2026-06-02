@@ -11,7 +11,7 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import StatCard from "@/components/shared/stat-card";
-
+import { toast } from "sonner";
 import {
   Users,
   UserCheck,
@@ -71,7 +71,7 @@ export default function EmployeesPage() {
         salary: Number(formData.salary),
       });
 
-      alert("Employee onboarded successfully");
+      toast.success("Employee onboarded successfully");
 
       refetch();
 
@@ -86,7 +86,7 @@ export default function EmployeesPage() {
     } catch (error) {
       console.error(error);
 
-      alert("Failed to onboard employee");
+      toast.error("Failed to onboard employee");
     }
   };
 

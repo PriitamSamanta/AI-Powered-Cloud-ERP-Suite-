@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/modules/auth/services/auth.service";
 import { RegisterPayload, UserRole } from "@/modules/auth/types/auth.types";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -19,11 +20,11 @@ export default function RegisterPage() {
         try {
             await registerUser(formData);
 
-            alert("Account created successfully");
+            toast.success("Account created successfully");
 
             router.push("/login");
         } catch (error) {
-            alert("Registration failed");
+            toast.error("Registration failed");
         }
     };
 

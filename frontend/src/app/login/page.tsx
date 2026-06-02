@@ -10,6 +10,7 @@ import { useAuthStore } from "@/store/authStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface LoginFormData {
   email: string;
@@ -46,7 +47,6 @@ export default function LoginPage() {
   const { register, handleSubmit } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("LOGIN DATA:", data);
     try {
       const response = await loginUser(data);
       const token = response.access_token;
@@ -57,7 +57,7 @@ export default function LoginPage() {
       const allowedRoles = moduleRules[selectedModule];
 
       if (!allowedRoles.includes(role)) {
-        alert(`You are not allowed to access ${selectedModule.toUpperCase()} module`);
+        toast.error(`You are not allowed to access ${selectedModule.toUpperCase()} module`);
         return;
       }
 
@@ -65,7 +65,7 @@ export default function LoginPage() {
       router.push(moduleRedirects[selectedModule]);
     } catch (error) {
       console.error(error);
-      alert("Invalid credentials");
+      toast.error("Invalid credentials");
     }
   };
 

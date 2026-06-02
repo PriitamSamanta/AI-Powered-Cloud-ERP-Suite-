@@ -32,7 +32,7 @@ import FormSection from "@/components/shared/form-section";
 
 import FormField from "@/components/shared/form-field";
 import StatCard from "@/components/shared/stat-card";
-
+import { toast } from "sonner";
 import {
   CalendarDays,
   Clock3,
@@ -76,7 +76,7 @@ export default function LeavePage() {
     try {
       await applyLeave(formData);
 
-      alert("Leave applied");
+      toast.success("Leave applied");
 
       refetch();
 
@@ -88,7 +88,7 @@ export default function LeavePage() {
     } catch (error) {
       console.error(error);
 
-      alert("Failed to apply leave");
+      toast.error("Failed to apply leave");
     }
   };
 
@@ -100,7 +100,7 @@ export default function LeavePage() {
     } catch (error) {
       console.error(error);
 
-      alert("Failed to update leave status");
+      toast.error("Failed to update leave status");
     }
   };
 

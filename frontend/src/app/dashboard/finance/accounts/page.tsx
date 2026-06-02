@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type AccountType = "ASSET" | "LIABILITY" | "EQUITY" | "INCOME" | "EXPENSE";
 
@@ -56,7 +57,7 @@ export default function FinanceAccountsPage() {
       fetchAccounts();
     } catch (error) {
       console.error(error);
-      alert("Failed to create account");
+      toast.error("Failed to create account");
     }
   };
 
