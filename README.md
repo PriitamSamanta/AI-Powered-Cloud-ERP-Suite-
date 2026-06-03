@@ -89,6 +89,29 @@ Backend
 └── Database Management
 ```
 
+## Screenshots
+
+### Landing Page
+
+![landing Page](./screenshots/landing-page.png)
+
+### Login Page
+
+![landing Page](./screenshots/login-page.png)
+
+### HR Dashboard
+
+![landing Page](./screenshots/hr-dashboard.png)
+
+### Finance Dashboard
+
+![landing Page](./screenshots/finance-dashboard.png)
+
+### BI Dashboard
+
+![landing Page](./screenshots/bi-dashboard-1.png)
+
+
 ## Installation
 
 ### Frontend
@@ -111,6 +134,16 @@ npm run start:dev
 npx prisma migrate dev
 npx prisma generate
 ```
+
+### Environment Variables
+
+Backend:-
+    *DATABASE_URL=
+    *JWT_SECRET=
+    *PORT=
+
+Frontend:-
+    NEXT_PUBLIC_API_URL=
 
 
 ## Future Improvements
